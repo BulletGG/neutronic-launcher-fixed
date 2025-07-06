@@ -18,12 +18,9 @@ using System.Media;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Windows.Forms;
-using KeyAuth;
 using neutronic_launcher;
 using System.ComponentModel.Composition.Primitives;
-using static KeyAuth.api;
 using DiscordRPC;
-using Neutronic_RPC;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
@@ -33,11 +30,6 @@ namespace WindowsFormsApp2
     public partial class Form1 : MaterialForm
     {
         private const string ProcessName = "Growtopia";
-        public static api KeyAuthApp = new api( //keyauth login shit change these to your own keyauth things if u want
-        name: "",
-        ownerid: "",
-        secret: "",
-        version: "1.0");
         string dllname = "youdllname.dll"; //put the dll in the folder where the loader executable is or make a path for the dll yourself do whatever u want
 
 
@@ -87,7 +79,6 @@ namespace WindowsFormsApp2
                 WriteProcessMemory(handleprocess2, allocated2, Encoding.Default.GetBytes(filename2.FullName), (uint)((filename2.FullName.Length + 1) * Marshal.SizeOf(typeof(char))), out _);
                 CreateRemoteThread(handleprocess2, IntPtr.Zero, 0, loadlib2, allocated2, 0, IntPtr.Zero);
                 materialButton1.Text = ("Neutronic Loaded Press INSERT To Open Menu");
-                RPC.SetState("Injected Neutronic", true);
             }
             else if (!materialCheckbox1.Checked) //this will be run if growtopia is NOT open
             {
@@ -103,7 +94,6 @@ namespace WindowsFormsApp2
                 WriteProcessMemory(handleprocess2, allocated2, Encoding.Default.GetBytes(filename2.FullName), (uint)((filename2.FullName.Length + 1) * Marshal.SizeOf(typeof(char))), out _);
                 CreateRemoteThread(handleprocess2, IntPtr.Zero, 0, loadlib2, allocated2, 0, IntPtr.Zero);
                 materialButton1.Text = ("Neutronic Loaded Press INSERT To Open Menu");
-                RPC.SetState("Injected Neutronic", true);
             }
 
         }
@@ -112,11 +102,10 @@ namespace WindowsFormsApp2
         {
             string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string growtopiaPath = Path.Combine(localAppDataPath, @"Growtopia\Growtopia.exe"); //find gt path
-            KeyAuthApp.init(); //do not remove this
-            materialLabel2.Text = (" Number of keys: " + KeyAuthApp.app_data.numKeys); //keyauth stats doesnt work i think
-            materialLabel3.Text = (" Number of users: " + KeyAuthApp.app_data.numUsers);
-            materialLabel4.Text = (" Number of online users: " + KeyAuthApp.app_data.numOnlineUsers);
-            materialLabel5.Text = (" Application Version: " + KeyAuthApp.app_data.version);
+            materialLabel2.Text = (" Number of keys: "); //keyauth stats doesnt work i think
+            materialLabel3.Text = (" Number of users: ");
+            materialLabel4.Text = (" Number of online users: "  );
+            materialLabel5.Text = (" Application Version: ");
             materialLabel1.Text = ("Only download at Neutronic.xyz, all other websites are fake");
             timer1.Start();
             this.materialLabel2.Font = new Font("Roboto", 50f, FontStyle.Bold);
@@ -124,7 +113,6 @@ namespace WindowsFormsApp2
             this.materialLabel4.Font = new Font("Roboto", 50f, FontStyle.Bold);
             this.materialLabel5.Font = new Font("Roboto", 50f, FontStyle.Bold);
 
-            RPC.SetState("Neutronic Loader", true); //discord rpc
 
             materialLabel6.Text = new WebClient().DownloadString("https://bullet.lol/neutronic"); //change this link to what text u want to show in the updates tab, this raw text site is an example
 

@@ -9,25 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using KeyAuth;
-using static KeyAuth.api;
 using System.Diagnostics;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using WindowsFormsApp2;
 using DiscordRPC;
-using Neutronic_RPC;
 
 namespace neutronic_launcher
 {
     public partial class Form2 : MaterialForm  //this is login form
     {
-
-        public static api KeyAuthApp = new api( //again change these to your keyauth things
-        name: "",
-        ownerid: "",
-        secret: "",
-        version: "1.0");
         public Form2()
         {
             InitializeComponent();
@@ -67,53 +58,39 @@ namespace neutronic_launcher
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            KeyAuthApp.init();
-            if (KeyAuthApp.checkblack())
-            {
-                Environment.Exit(0);  // kill program if blacklisted from your keyauth login
-                MessageBox.Show("Blacklisted mf");
-            }
+
             timer1.Start();
 
-            RPC.rpctimestamp = Timestamps.Now;
-            RPC.InitializeRPC();
-            RPC.SetState("Login Page", true);
         }
 
         private void materialButton1_Click(object sender, EventArgs e) //login
         {
-            KeyAuthApp.login(materialTextBox1.Text, materialTextBox2.Text);
-            if (KeyAuthApp.response.success)
-            {
+
                 Form1 main = new Form1();
                 main.Show();
                 this.Hide();
                 MessageBox.Show("Logging In succesfull");
-            }
+            
         }
 
         private void materialButton2_Click(object sender, EventArgs e) //register
         {
-            KeyAuthApp.register(materialTextBox4.Text, materialTextBox3.Text, materialTextBox5.Text);
-            if (KeyAuthApp.response.success)
-            {
+
                 Form1 main = new Form1();
                 main.Show();
                 this.Hide();
                 MessageBox.Show("Registering Succesful, remember your password");
-            }
+            
         }
 
         private void materialButton3_Click(object sender, EventArgs e) //register with key only
         {
-            KeyAuthApp.license(materialTextBox6.Text);
-            if (KeyAuthApp.response.success)
-            {
+
                 Form1 main = new Form1();
                 main.Show();
                 this.Hide();
                 MessageBox.Show("Registering Succesful, your username and password are auto set to your key, so save it");
-            }
+            
         }
     }
 }

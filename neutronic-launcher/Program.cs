@@ -17,7 +17,7 @@ namespace neutronic_launcher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form2()); //this is so it launches login form first if u remove login set this to Form1
+            Application.Run(new Form1()); //this is so it launches login form first if u remove login set this to Form1
         }
     }
 }
